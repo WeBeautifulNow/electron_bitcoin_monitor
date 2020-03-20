@@ -15,7 +15,7 @@
 						Current
 					</div>
 					<div>
-						5555
+						{{ bitCurrentPrice }}
 					</div>
 				</li>
 				<li>
@@ -23,7 +23,7 @@
 						Future
 					</div>
 					<div>
-						4444
+						{{ bitFeturePrice }}
 					</div>
 				</li>
 			</ul>
@@ -32,41 +32,65 @@
 		<Card class="cardWapper">
 			<p slot="title">
 				<Icon type="logo-usd" />
-				My own
+				My Own
 			</p>
 			<ul class="line">
 				<li>
 					<div>
 						My Bid Price
 					</div>
-					<div></div>
+					<div>{{ myBidPrice || 0 }}</div>
 				</li>
 				<li>
 					<div>
 						My Lever
 					</div>
-					<div></div>
+					<div>{{ myLeverRatio || 0 }}</div>
 				</li>
 				<li>
 					<div>
-						Profit And Loss
+						浮盈浮亏
 					</div>
-					<div></div>
+					<div>{{ profitAndLoss }}</div>
 				</li>
 				<li>
-					<div>
-						Profit And Loss (%)
-					</div>
-					<div></div>
+					<div>浮盈浮亏百分比</div>
+					<div>{{ profitAndLossPercentage }}%</div>
 				</li>
 			</ul>
 		</Card>
+		<AddExisting :handleAdd="handleAdd" />
 	</div>
 </template>
 
 <script>
+import AddExisting from "./AddExisting";
 export default {
-	name: "CurrentStatus"
+	name: "CurrentStatus",
+	components: {
+		AddExisting
+	},
+	data() {
+		return {
+			bitCurrentPrice: 5555,
+			bitFeturePrice: 5556,
+
+			myBidPrice: 0,
+			myLeverRatio: 0,
+			myBuyQuantity: 0
+		};
+	},
+	methods: {
+		handleAdd(formData) {
+			this.myBidPrice = formData.bidPrice;
+			this.myLeverRatio = formData.leverRatio;
+			this.myBuyQuantity = formData.buyQuantity;
+		}
+	},
+	computed: {
+		profitAndLoss: () => (this.myBidPrice - this.bitCurrentPrice) * this.myBuyQuantity,
+		profitAndLossPercentage: () => ((this.myBidPrice - this.bitCurrentPrice) / this.bitCurrentPrice) * 100
+	}
 };
 </script>
 <style scoped>
