@@ -3,12 +3,15 @@
 		<Tabs value="tabName">
 			<TabPane label="行情&持仓" name="currentStatus">
 				<CurrentStatus
-					myPurchasePrice="this.myPurchasePrice"
-					myPurchaseQuantity="this.myPurchaseQuantity"
+					:myPurchasePrice="myPurchasePrice"
+					:myPurchaseQuantity="myPurchaseQuantity"
 				/>
 			</TabPane>
 			<TabPane label="添加持仓" name="addExisting">
-				<AddExisting />
+				<AddExisting 
+					:myPurchasePrice="myPurchasePrice"
+					:myPurchaseQuantity="myPurchaseQuantity"
+				/>
 			</TabPane>
 		</Tabs>
 	</div>

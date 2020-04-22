@@ -26,50 +26,36 @@
 				<Icon type="logo-usd" />
 				My Own
 			</p>
-			<ul>
-				<!-- <li v-for="(price, index) in this.props.myPurchasePrice" :key="index">
+			<ul class="line">
+				<li>
+					<div> price </div>
+					<div> quantity </div>
+				</li>
+				<li v-for="(price, index) in myPurchasePrice" :key="index">
 					<div>
 						{{ price }}
 					</div>
 					<div>
-						{{ this.props.myPurchaseQuantity[index] }}
+						{{ myPurchaseQuantity[index] }}
 					</div>
-				</li> -->
+				</li>
 			</ul>
 			
 		</Card>
-		<AddExisting :handleAdd="handleAdd" />
 	</div>
 </template>
 
 <script>
-import AddExisting from "./AddExisting";
 export default {
 	name: "CurrentStatus",
-	components: {
-		AddExisting
-	},
-	props:[myPurchasePrice, myPurchaseQuantity],
+	props:['myPurchasePrice', 'myPurchaseQuantity'],
 	data() {
 		return {
-			bitCurrentPrice: 5555,
 			bitFeturePrice: 5556,
-
-			myBidPrice: 0,
-			myLeverRatio: 0,
-			myBuyQuantity: 0
 		};
 	},
 	methods: {
-		handleAdd(formData) {
-			this.myBidPrice = formData.bidPrice;
-			this.myLeverRatio = formData.leverRatio;
-			this.myBuyQuantity = formData.buyQuantity;
-		}
-	},
-	computed: {
-		profitAndLoss: () => (this.myBidPrice - this.bitCurrentPrice) * this.myBuyQuantity,
-		profitAndLossPercentage: () => ((this.myBidPrice - this.bitCurrentPrice) / this.bitCurrentPrice) * 100
+		
 	}
 };
 </script>

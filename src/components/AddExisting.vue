@@ -1,19 +1,20 @@
 <template>
 	<div>
-		<Button type="dashed" style="margin: 20px 0 0 0" @click="openModal"> add own </Button>
-		<Modal v-model="visable" title="添加持仓" @on-ok="addOwn" @on-cancel="closeModal">
-			<Form :model="formData">
-				<FormItem>
-					<Input type="text" v-model="formData.bidPrice" placeholder="买入价格" />
-				</FormItem>
-				<FormItem>
-					<Input type="text" v-model="formData.leverRatio" placeholder="杠杆倍率" />
-				</FormItem>
-				<FormItem>
-					<Input type="text" v-model="formData.buyQuantity" placeholder="买入数量(算上杠杆)" />
-				</FormItem>
-			</Form>
-		</Modal>
+		<div class="area">
+			<div> Add one </div>
+			<Input v-model="price" placeholder="price" style="width: 300px"/>
+			<Input v-model="quantity" placeholder="quantity" style="width: 300px"/>
+			<Button class="btn" type="dashed" style="margin: 20px 0 0 0" @click="addOne"> add own </Button>
+		</div>
+		<div class="area">
+			<div> Bulk add </div>
+			<Input v-model="price" placeholder="bulk add use [price, quantity],[],[]" style="width: 300px"/>
+			<Button class="btn" type="dashed" style="margin: 20px 0 0 0" @click="addOne"> bulk add </Button>
+		</div>
+		<div class="area">
+			<div> export </div>
+			<Button class="btn" type="dashed" style="margin: 20px 0 0 0" @click="addOne"> export </Button>
+		</div>
 	</div>
 </template>
 
@@ -22,33 +23,25 @@ export default {
 	name: "AddExisting",
 	data() {
 		return {
-			visable: false,
-			formData: {
-				bidPrice: null,
-				leverRatio: null,
-				buyQuantity: null
-			}
+			price: null,
+			quantity: null
 		};
 	},
 	methods: {
-		clearFormData() {
-			this.formData.bidPrice = null;
-			this.formData.leverRatio = null;
-			this.formData.buyQuantity = null;
-		},
-		closeModal() {
-			this.clearFormData();
-			this.visable = false;
-		},
-		addOwn() {
-			this.handleAdd(this.formData);
-			this.clearFormData;
-		},
-		openModal() {
-			this.visable = true;
+		addOne() {
+			this.props.myPurchasePrice.push(this.price);
+			this.props.myPurchaseQuantity.push(this.quantity);
 		}
 	},
-	props: ["handleAdd"]
+	props:['myPurchasePrice', 'myPurchaseQuantity']
 };
 </script>
-<style scoped></style>
+<style scoped>
+	.btn {
+		display: block;
+		margin: auto;
+	}
+	.area {
+		margin-bottom: 20px;
+	}
+</style>
