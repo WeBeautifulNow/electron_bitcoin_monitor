@@ -19,7 +19,6 @@ function createWindow () {
   win = new BrowserWindow({ width: 500, height: 1000, webPreferences: {
     nodeIntegration: true
   } })
-
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)

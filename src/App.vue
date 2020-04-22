@@ -2,7 +2,10 @@
 	<div id="app">
 		<Tabs value="tabName">
 			<TabPane label="行情&持仓" name="currentStatus">
-				<CurrentStatus />
+				<CurrentStatus
+					myPurchasePrice="this.myPurchasePrice"
+					myPurchaseQuantity="this.myPurchaseQuantity"
+				/>
 			</TabPane>
 			<TabPane label="添加持仓" name="addExisting">
 				<AddExisting />
@@ -22,7 +25,9 @@ export default {
 	},
 	data() {
 		return {
-			tabName: "currentStatus"
+			tabName: "currentStatus",
+			myPurchasePrice: [1,3],
+			myPurchaseQuantity: [5,6]
 		};
 	}
 };

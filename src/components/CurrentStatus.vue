@@ -12,14 +12,6 @@
 			<ul class="line">
 				<li>
 					<div>
-						Current
-					</div>
-					<div>
-						{{ bitCurrentPrice }}
-					</div>
-				</li>
-				<li>
-					<div>
 						Future
 					</div>
 					<div>
@@ -34,30 +26,17 @@
 				<Icon type="logo-usd" />
 				My Own
 			</p>
-			<ul class="line">
-				<li>
+			<ul>
+				<!-- <li v-for="(price, index) in this.props.myPurchasePrice" :key="index">
 					<div>
-						My Bid Price
+						{{ price }}
 					</div>
-					<div>{{ myBidPrice || 0 }}</div>
-				</li>
-				<li>
 					<div>
-						My Lever
+						{{ this.props.myPurchaseQuantity[index] }}
 					</div>
-					<div>{{ myLeverRatio || 0 }}</div>
-				</li>
-				<li>
-					<div>
-						浮盈浮亏
-					</div>
-					<div>{{ profitAndLoss }}</div>
-				</li>
-				<li>
-					<div>浮盈浮亏百分比</div>
-					<div>{{ profitAndLossPercentage }}%</div>
-				</li>
+				</li> -->
 			</ul>
+			
 		</Card>
 		<AddExisting :handleAdd="handleAdd" />
 	</div>
@@ -70,6 +49,7 @@ export default {
 	components: {
 		AddExisting
 	},
+	props:[myPurchasePrice, myPurchaseQuantity],
 	data() {
 		return {
 			bitCurrentPrice: 5555,
