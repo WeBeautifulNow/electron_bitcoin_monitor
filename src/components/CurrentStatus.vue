@@ -57,17 +57,19 @@ export default {
 	data() {
 		return {
 			bitFeturePrice: 5556,
-			lastReminderTime: 0,
+			lastReminderTime: -60000,
 			priceGap: 50
 		};
 	},
 	mounted: function() {
-		setTimeout( () => {
+		let self = this;
+		setInterval( () => {
+			console.log('set time out')
 			axios
-			.get('https://openapi.58ex.com/v1/usdt/market/ticker?contractId=1001')
+			.get('/v1/usdt/market/ticker?contractId=1001')
 			.then(response => {
-				this.bitFeturePrice = response.data.last;
-				this.priceDetection();
+				self.bitFeturePrice = +response.data.data.last;
+				self.priceDetection();
 			})
 		}, 2000)
 	},
@@ -84,6 +86,7 @@ export default {
 			});
 			if (this.bitFeturePrice - max > this.priceGap || min - this.bitFeturePrice > this.priceGap) {
 				this.reminderMe();
+				this.lastReminderTime = curTime;
 			}
 		},
 		reminderMe() {
