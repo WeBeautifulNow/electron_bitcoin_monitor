@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<Tabs value="tabName">
+		<Tabs :value="tabName">
 			<TabPane label="行情&持仓" name="currentStatus">
 				<CurrentStatus
 					:myPurchasePrice="myPurchasePrice"
@@ -11,6 +11,7 @@
 				<AddExisting 
 					:myPurchasePrice="myPurchasePrice"
 					:myPurchaseQuantity="myPurchaseQuantity"
+					:addRecord="addRecord"
 				/>
 			</TabPane>
 		</Tabs>
@@ -32,6 +33,17 @@ export default {
 			myPurchasePrice: [1,3],
 			myPurchaseQuantity: [5,6]
 		};
+	},
+	methods: {
+		addRecord(priceArr, quantityArr) {
+			this.concatArr(this.myPurchasePrice, priceArr);
+			this.concatArr(this.myPurchaseQuantity, quantityArr);
+		},
+		concatArr(arr1, arr2) {
+			for (let item of arr2) {
+				arr1.push(item);
+			}
+		}
 	}
 };
 </script>

@@ -5,7 +5,7 @@
 				<Icon type="logo-bitcoin" />
 				Bit Coin Price
 			</p>
-			<a href="www.baidu.com" slot="extra">
+			<a href="https://usdt.58ex.com/trade/1001" slot="extra">
 				<Icon type="ios-loop-strong"></Icon>
 				Open website
 			</a>
@@ -30,6 +30,7 @@
 				<li>
 					<div> price </div>
 					<div> quantity </div>
+					<div> profit </div>
 				</li>
 				<li v-for="(price, index) in myPurchasePrice" :key="index">
 					<div>
@@ -37,6 +38,9 @@
 					</div>
 					<div>
 						{{ myPurchaseQuantity[index] }}
+					</div>
+					<div>
+						{{ price > 0 ? price - bitFeturePrice : bitFeturePrice - price}}
 					</div>
 				</li>
 			</ul>
@@ -46,6 +50,7 @@
 </template>
 
 <script>
+import * as axios from "axios";
 export default {
 	name: "CurrentStatus",
 	props:['myPurchasePrice', 'myPurchaseQuantity'],
@@ -53,6 +58,13 @@ export default {
 		return {
 			bitFeturePrice: 5556,
 		};
+	},
+	mounted: function() {
+		setTimeout( () => {
+			axios
+			.get('https://openapi.58ex.com/v1/usdt/market/ticker?contractId=1001')
+			.then(response => this.bitFeturePrice = response.data.last)
+		}, 2000)
 	},
 	methods: {
 		
