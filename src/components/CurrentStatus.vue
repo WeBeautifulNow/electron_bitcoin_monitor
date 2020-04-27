@@ -20,7 +20,7 @@
 				</li>
 			</ul>
 		</Card>
-		<br /><br />
+		<br>
 		<Card class="cardWapper">
 			<p slot="title">
 				<Icon type="logo-usd" />
@@ -28,11 +28,15 @@
 			</p>
 			<ul class="line">
 				<li>
+					<div> del </div>
 					<div> price </div>
 					<div> quantity </div>
 					<div> profit </div>
 				</li>
-				<li v-for="(price, index) in myPurchasePrice" :key="index">
+				<li v-for="(price, index) in myPurchasePrice" :key="price + '_' + myPurchaseQuantity[index]">
+					<div>
+						<Icon @click="() => deleteOne(index)" type="ios-trash-outline" />
+					</div>
 					<div>
 						{{ price }}
 					</div>
@@ -40,7 +44,7 @@
 						{{ myPurchaseQuantity[index] }}
 					</div>
 					<div>
-						{{ price > 0 ? price - bitFeturePrice : bitFeturePrice - price}}
+						{{ price > 0 ? (bitFeturePrice - price).toFixed(2) : (- price - bitFeturePrice).toFixed(2)}}
 					</div>
 				</li>
 			</ul>
@@ -53,10 +57,10 @@
 import * as axios from "axios";
 export default {
 	name: "CurrentStatus",
-	props:['myPurchasePrice', 'myPurchaseQuantity'],
+	props:['myPurchasePrice', 'myPurchaseQuantity', 'deleteOneRecord'],
 	data() {
 		return {
-			bitFeturePrice: 5556,
+			bitFeturePrice: 0,
 			lastReminderTime: -60000,
 			priceGap: 50
 		};
@@ -64,7 +68,6 @@ export default {
 	mounted: function() {
 		let self = this;
 		setInterval( () => {
-			console.log('set time out')
 			axios
 			.get('/v1/usdt/market/ticker?contractId=1001')
 			.then(response => {
@@ -91,6 +94,10 @@ export default {
 		},
 		reminderMe() {
 			this.$Message.warning("note current price!!");
+		},
+		deleteOne(index) {
+			this.deleteOneRecord(index);
+			this.$Message.success("delete one record success");
 		}
 	}
 };
@@ -98,7 +105,7 @@ export default {
 <style scoped>
 .cardWapper {
 	width: 80%;
-	margin: auto;
+	margin: 30px auto 0;
 }
 ul.line > li {
 	display: flex;

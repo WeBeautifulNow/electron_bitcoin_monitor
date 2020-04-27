@@ -5,6 +5,7 @@
 				<CurrentStatus
 					:myPurchasePrice="myPurchasePrice"
 					:myPurchaseQuantity="myPurchaseQuantity"
+					:deleteOneRecord="deleteOneRecord"
 				/>
 			</TabPane>
 			<TabPane label="添加持仓" name="addExisting">
@@ -30,14 +31,18 @@ export default {
 	data() {
 		return {
 			tabName: "currentStatus",
-			myPurchasePrice: [1,3],
-			myPurchaseQuantity: [5,6]
+			myPurchasePrice: [],
+			myPurchaseQuantity: []
 		};
 	},
 	methods: {
 		addRecord(priceArr, quantityArr) {
 			this.concatArr(this.myPurchasePrice, priceArr);
 			this.concatArr(this.myPurchaseQuantity, quantityArr);
+		},
+		deleteOneRecord(index) {
+			this.myPurchasePrice.splice(index, 1);
+			this.myPurchaseQuantity.splice(index, 1);
 		},
 		concatArr(arr1, arr2) {
 			for (let item of arr2) {

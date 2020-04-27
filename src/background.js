@@ -5,21 +5,27 @@ import {
   createProtocol,
   /* installVueDevtools */
 } from 'vue-cli-plugin-electron-builder/lib'
+import { fstat } from 'fs'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 let devTools
+var fs = require('fs')
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 500, height: 1000, webPreferences: {
-    nodeIntegration: true
-  } })
+  win = new BrowserWindow({ 
+    width: 500, 
+    height: 700, 
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
   devTools = new BrowserWindow();
   win.webContents.setDevToolsWebContents(devTools.webContents)
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -34,6 +40,9 @@ function createWindow () {
   }
 
   win.on('closed', () => {
+    // let desktopPath = require('path').join(require('os').homedir(), 'Desktop');
+    // let data = new Uint8Array(Buffer.from('我的持仓'));
+    // fs.writeFile(desktopPath + '/bitCoinOwn.txt', data, () => {});
     win = null
   })
 
